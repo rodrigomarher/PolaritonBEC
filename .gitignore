@@ -4,7 +4,10 @@ biblio/
 venv/
 build/
 tmp/
+lib/
 notebooks/
 .ipynb_checkpoints
 *.o
+*.swp
+src/*.swp
 .DS_Store

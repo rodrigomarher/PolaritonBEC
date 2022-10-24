@@ -53,19 +53,20 @@ cdouble subField::_laguerre(const double x, const double y, const cdouble tenv){
     a = pow(sqrt(r2)*sqrt2/_w0,abs(_l));
     b = exp(-r2/w02);
     c = std::assoc_laguerre(_p,_l,2.0*r2/w02);
-    phase = exp(-I*(double)_l*theta);
+    phase = exp(-I*(double)_l*theta+I*(_kpx*x + _kpy*y));
     return tenv*_fp*(double)norm*a*b*c*phase;
 }
 
 cdouble subField::_tenv_sin2(const int ti){
     double deltat = _tmax-_tmin; 
+    cdouble phase = exp(-I*_deltaw*_grid->t(ti));
     if(_grid->t(ti) < _tmin){
         return cdouble(0.0,0.0);
     }
     if(_grid->t(ti) > _tmax){
         return cdouble(0.0,0.0);
         }
-    return cdouble(pow(sin(M_PI*(_grid->t(ti)-_tmin)/deltat),2),0.0);
+    return cdouble(pow(sin(M_PI*(_grid->t(ti)-_tmin)/deltat),2),0.0)*phase;
 }
 
 void subField::set_grid(Grid *grid){

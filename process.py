@@ -1,12 +1,12 @@
 import numpy as np
-import matplotlib.pylot as plt
+import matplotlib.pyplot as plt
 import imageio as iio
 import glob
 import gc
 from joblib import Parallel, delayed
 
 njobs=6
-path = "../results/"
+path = "results/"
 wfc_names = []
 wfx_names = []
 pump_names = []
