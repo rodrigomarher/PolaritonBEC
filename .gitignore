@@ -1,0 +1,10 @@
+results/
+PolaritonBEC*
+biblio/
+venv/
+build/
+tmp/
+notebooks/
+.ipynb_checkpoints
+*.o
+.DS_Store
