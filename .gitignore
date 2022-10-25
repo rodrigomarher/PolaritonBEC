@@ -9,5 +9,6 @@ notebooks/
 .ipynb_checkpoints
 *.o
 *.swp
+*.gif
 src/*.swp
 .DS_Store
