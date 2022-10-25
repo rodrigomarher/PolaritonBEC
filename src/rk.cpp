@@ -19,7 +19,7 @@ cdouble RK::_rhs_fc(const int i, const int j, const int ti, cdouble** knc, cdoub
     cdouble laplacian = _laplacian(i,j, _wfc, knc, pre); 
     cdouble fp = _field->at(i,j);
     cdouble a = fp + _params->omega_r*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble b = -0.5*I*hbar*_params->gamma_c*(_wfc->at(i,j)+pre*knc[i][j]);
+    cdouble b = (_ph_pot->at(i,j) - 0.5*I*hbar*_params->gamma_c)*(_wfc->at(i,j)+pre*knc[i][j]);
     cdouble c = -0.5*hbar*hbar/_params->mc*laplacian;
     return -I/hbar*(a+b+c);
 }
@@ -28,7 +28,7 @@ cdouble RK::_rhs_fx(const int i, const int j, const int ti, cdouble** knc, cdoub
 
     cdouble laplacian = _laplacian(i,j, _wfx, knx, pre); 
     cdouble a = _params->omega_r*(_wfc->at(i,j)+pre*knc[i][j]);
-    cdouble b = -0.5*I*hbar*_params->gamma_x*(_wfx->at(i,j)+pre*knx[i][j]);
+    cdouble b = (_ex_pot->at(i,j)- 0.5*I*hbar*_params->gamma_x)*(_wfx->at(i,j)+pre*knx[i][j]);
     cdouble c = _params->g*abs(_wfx->at(i,j)+pre*knx[i][j])*abs(_wfx->at(i,j)+pre*knx[i][j])*(_wfx->at(i,j)+pre*knx[i][j]);
     cdouble d = _params->delta*(_wfx->at(i,j)+pre*knx[i][j]) -0.5*hbar*hbar/_params->mx*laplacian;
     return -I/hbar*(a+b+c+d);
@@ -130,6 +130,11 @@ void RK::set_wf(Wavefunction* wf1, Wavefunction* wf2){
 
 void RK::set_field(Field* field){
     _field = field;
+}
+
+void RK::set_pot(Potential *ph_pot, Potential *ex_pot){
+    _ph_pot = ph_pot;
+    _ex_pot = ex_pot;
 }
 
 void RK::step(const int ti){

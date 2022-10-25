@@ -34,6 +34,8 @@ class Params{
         double dt;              //Temporal step [ps]
         int nfields;            //Number of fields
         std::string fields_def; //Field defunition
+        std::string ph_pot;     //Photonic potential
+        std::string ex_pot;     //Excitonic potential
         
 	Params();
         void print_param();

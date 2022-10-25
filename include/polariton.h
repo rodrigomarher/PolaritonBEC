@@ -5,6 +5,7 @@
 #include "param.h"
 #include "wavefunction.h"
 #include "field.h"
+#include "potential.h"
 #include "rk.h"
 
 class Polariton{
@@ -14,6 +15,8 @@ class Polariton{
         Wavefunction *_wfc, *_wfx;
         RK *_rk;
         Field* _field;
+        Potential *_ph_pot, *_ex_pot;
+
     public:
         Polariton(Params *params);
         void set_param(Params *params);

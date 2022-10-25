@@ -5,6 +5,7 @@
 #include "grid.h"
 #include "wavefunction.h"
 #include "field.h"
+#include "potential.h"
 
 
 class RK{
@@ -14,6 +15,7 @@ class RK{
         Field* _field;
         Wavefunction* _wfx;
         Wavefunction* _wfc;
+        Potential *_ph_pot, *_ex_pot;
         
         //TODO: Store kn matrices in vector containers
         cdouble **_k1x, **_k2x, **_k3x, **_k4x;
@@ -34,6 +36,7 @@ class RK{
         void set_grid(Grid* grid);
         void set_wf(Wavefunction* wfx, Wavefunction* wfc);
         void set_field(Field* field);
+        void set_pot(Potential *ph_pot, Potential *ex_pot);
         void step(const int ti);
         ~RK();
 

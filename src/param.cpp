@@ -4,9 +4,9 @@
 #include "param.h"
 
 Params::Params(){
-    n_threads   = 8;
-    g           = 2.0;
-    omega_r     = 4.4;
+    n_threads   = 16;
+    g           = 0.1;
+    omega_r     = 5.0;
     gamma_x     = 0.01;
     gamma_c     = 0.01;
     mc          = 2E-5*m0;
@@ -24,8 +24,10 @@ Params::Params(){
     nt          = 50000;
     dt          = (tmax-tmin)/(double)(nt-1);
     nfields     = 1;
-    fields_def  = "2.0, 5.0, 10.0, 0.0, 0.0, 1.4, 0.0, -1.0, 0.0, 0, 0;";
+    fields_def  = "20.0, 20.0, 10.0, 0.0, 0.0, 0.2, 0.0, -0.1, 0.0, 0, 0;";
                   //"2.0, 5.0,-10.0, 0.0, 0.0, 1.4, 0.0, 0.0, 0.0, 3, 0";
+    ph_pot      = "cylinder,100.0,2.0,0.0,0.0";
+    ex_pot      = " ,";
 
 }
 
@@ -51,7 +53,9 @@ void Params::print_param(){
         "tmax:      "<<tmax<<std::endl<<
         "nt:        "<<nt<<std::endl<<
         "nfields:   "<<nfields<<std::endl<<
-        "field_def: "<<fields_def<<std::endl;
+        "field_def: "<<fields_def<<std::endl<<
+        "ph_pot:    "<<ph_pot<<std::endl<<
+        "ex_pot:    "<<ex_pot<<std::endl;
 
     std::cout<<ss.str();
 }

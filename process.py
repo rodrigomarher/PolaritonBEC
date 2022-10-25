@@ -5,7 +5,7 @@ import glob
 import gc
 from joblib import Parallel, delayed
 
-njobs=6
+njobs=16
 path = "results/"
 wfc_names = []
 wfx_names = []

@@ -19,10 +19,20 @@ Polariton::Polariton(Params *params){
     _field->set_grid(_grid);
     _field->set_field();
 
+    _ph_pot = new Potential(_params);
+    _ex_pot = new Potential(_params);
+    _ph_pot->set_grid(_grid);
+    _ex_pot->set_grid(_grid);
+    _ph_pot->set_def(_params->ph_pot);
+    _ex_pot->set_def(_params->ex_pot);
+    _ph_pot->set_potential();
+    _ex_pot->set_potential();
+
     _rk = new RK(_params);
     _rk->set_grid(_grid);
     _rk->set_wf(_wfx, _wfc);
     _rk->set_field(_field);
+    _rk->set_pot(_ph_pot, _ex_pot);
 
     _params->print_param();
     

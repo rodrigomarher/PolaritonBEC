@@ -12,7 +12,7 @@ ifeq ($(use_MPI), Yes)
 	CC =  mpic++
 endif
 
-CFLAGS = -lm -O3 -fopenmp -ffast-math -g -Wall
+CFLAGS = -lm -O3 -fopenmp -ffast-math -g -Wall -std=c++17
 
 SRC = ./src/
 
@@ -30,6 +30,7 @@ test: $(SRC)/test.cpp
 
 PolaritonBEC: $(LIB)libpolaritonbec.so
 	mkdir -p results
+	mkdir -p tmp
 	$(CC) -L$(LIB) -lpolaritonbec -I$(INCLUDE) $(CFLAGS) $(SRC)/main.cpp -o PolaritonBEC
 
 $(LIB)libpolaritonbec.so: $(OBJECTS)
@@ -42,6 +43,7 @@ $(BUILD)%.o: $(SRC)/%.cpp
 
 clean:
 	rm -rf results/
+	rm -rf tmp/
 	rm -rf PolaritonBEC
 	rm -rf output_*
 	rm -rf slurm*
