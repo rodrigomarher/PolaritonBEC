@@ -6,6 +6,7 @@
 #include "wavefunction.h"
 #include "field.h"
 #include "potential.h"
+#include "mask.h"
 #include "rk.h"
 
 class Polariton{
@@ -16,6 +17,7 @@ class Polariton{
         RK *_rk;
         Field* _field;
         Potential *_ph_pot, *_ex_pot;
+        Mask *_mask;
 
     public:
         Polariton(Params *params);

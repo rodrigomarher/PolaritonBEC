@@ -23,11 +23,15 @@ Params::Params(){
     tmax        = 20;
     nt          = 50000;
     dt          = (tmax-tmin)/(double)(nt-1);
-    nfields     = 1;
-    fields_def  = "20.0, 20.0, 10.0, 0.0, 0.0, 0.2, 0.0, -0.1, 0.0, 0, 0;";
+    mask_xmax   = 6.0;
+    mask_ymax   = 6.0;
+    mask_gamma  = 1.0;
+    nfields     = 2;
+    fields_def  = "10, 5.0, 0.0, 0.0, 0.0, 0.4, 0.0, 0.0, 0.0, 3, 0;"
+    		      "10, 5.0, 0.0, 0.0, 0.2, 0.6, 0.0, 0.0, 0.0, -3, 0;";
                   //"2.0, 5.0,-10.0, 0.0, 0.0, 1.4, 0.0, 0.0, 0.0, 3, 0";
-    ph_pot      = "cylinder,100.0,2.0,0.0,0.0";
-    ex_pot      = " ,";
+    ph_pot      = ",";
+    ex_pot      = ",";
 
 }
 
@@ -36,26 +40,29 @@ void Params::print_param(){
     std::stringstream ss;
     ss<<"PolaritonBEC:\n"<<
         "----------------------\n"<<
-        "g:         "<<g<<std::endl<<
-        "omega_r:   "<<omega_r<<std::endl<<
-        "gamma_x:   "<<gamma_x<<std::endl<<
-        "gamma_c:   "<<gamma_c<<std::endl<<
-        "mc:        "<<mc<<std::endl<<
-        "xmin:      "<<xmin<<std::endl<<
-        "xmax:      "<<xmax<<std::endl<<
-        "ymin:      "<<ymin<<std::endl<<
-        "ymax:      "<<ymax<<std::endl<<
-        "nx:        "<<nx<<std::endl<<
-        "ny:        "<<ny<<std::endl<<
-        "dx:        "<<dx<<std::endl<<
-        "dy:        "<<dy<<std::endl<<
-        "tmin:      "<<tmin<<std::endl<<
-        "tmax:      "<<tmax<<std::endl<<
-        "nt:        "<<nt<<std::endl<<
-        "nfields:   "<<nfields<<std::endl<<
-        "field_def: "<<fields_def<<std::endl<<
-        "ph_pot:    "<<ph_pot<<std::endl<<
-        "ex_pot:    "<<ex_pot<<std::endl;
+        "g:             "<<g<<std::endl<<
+        "omega_r:       "<<omega_r<<std::endl<<
+        "gamma_x:       "<<gamma_x<<std::endl<<
+        "gamma_c:       "<<gamma_c<<std::endl<<
+        "mc:            "<<mc<<std::endl<<
+        "xmin:          "<<xmin<<std::endl<<
+        "xmax:          "<<xmax<<std::endl<<
+        "ymin:          "<<ymin<<std::endl<<
+        "ymax:          "<<ymax<<std::endl<<
+        "nx:            "<<nx<<std::endl<<
+        "ny:            "<<ny<<std::endl<<
+        "dx:            "<<dx<<std::endl<<
+        "dy:            "<<dy<<std::endl<<
+        "tmin:          "<<tmin<<std::endl<<
+        "tmax:          "<<tmax<<std::endl<<
+        "nt:            "<<nt<<std::endl<<
+        "mask_xmax:     "<<mask_xmax<<std::endl<<
+        "mask_ymax:     "<<mask_ymax<<std::endl<<
+        "mask_gamma:    "<<mask_gamma<<std::endl<<
+        "nfields:       "<<nfields<<std::endl<<
+        "field_def:     "<<fields_def<<std::endl<<
+        "ph_pot:        "<<ph_pot<<std::endl<<
+        "ex_pot:        "<<ex_pot<<std::endl;
 
     std::cout<<ss.str();
 }

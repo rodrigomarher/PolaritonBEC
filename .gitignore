@@ -11,4 +11,5 @@ notebooks/
 *.swp
 *.gif
 src/*.swp
+movies/
 .DS_Store

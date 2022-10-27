@@ -32,6 +32,9 @@ class Params{
         double tmax;            //Max simulation time [ps] 
         int nt;                 //Number temporal points
         double dt;              //Temporal step [ps]
+        double mask_xmax;       //Mask max x [um]
+        double mask_ymax;       //Mask max y [um]
+        double mask_gamma;      //Mask gamma value
         int nfields;            //Number of fields
         std::string fields_def; //Field defunition
         std::string ph_pot;     //Photonic potential

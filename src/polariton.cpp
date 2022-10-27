@@ -28,10 +28,15 @@ Polariton::Polariton(Params *params){
     _ph_pot->set_potential();
     _ex_pot->set_potential();
 
+    _mask = new Mask(_params);
+    _mask->set_grid(_grid);
+    _mask->set_mask();
+
     _rk = new RK(_params);
     _rk->set_grid(_grid);
     _rk->set_wf(_wfx, _wfc);
     _rk->set_field(_field);
+    _rk->set_mask(_mask);
     _rk->set_pot(_ph_pot, _ex_pot);
 
     _params->print_param();

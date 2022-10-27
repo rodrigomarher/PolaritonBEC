@@ -132,6 +132,10 @@ void RK::set_field(Field* field){
     _field = field;
 }
 
+void RK::set_mask(Mask* mask){
+    _mask = mask;
+}
+
 void RK::set_pot(Potential *ph_pot, Potential *ex_pot){
     _ph_pot = ph_pot;
     _ex_pot = ex_pot;
@@ -147,8 +151,8 @@ void RK::step(const int ti){
     #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
-            wfc[i][j] += u*(_k1c[i][j] + 2.0*_k2c[i][j] + 2.0*_k3c[i][j] + _k4c[i][j]);
-            wfx[i][j] += u*(_k1x[i][j] + 2.0*_k2x[i][j] + 2.0*_k3x[i][j] + _k4x[i][j]);
+            wfc[i][j] += u*(_k1c[i][j] + 2.0*_k2c[i][j] + 2.0*_k3c[i][j] + _k4c[i][j])*_mask->x(i)*_mask->y(j);
+            wfx[i][j] += u*(_k1x[i][j] + 2.0*_k2x[i][j] + 2.0*_k3x[i][j] + _k4x[i][j])*_mask->x(i)*_mask->y(j);
         }
     }
 }
