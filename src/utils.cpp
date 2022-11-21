@@ -24,6 +24,19 @@ T** alloc2d(int& ni, int& nj){
 }
 
 template <class T>
+T*** alloc3d(int& ni, int& nj, int& nk){
+    T*** arr;
+    arr = new T**[ni];
+    for (int i=0; i<ni; i++){
+        arr[i] = new T*[nj];
+        for (int j=0; j<nj; j++){
+            arr[i][j] = new T[nk];
+        }
+    }
+    return arr;
+}
+
+template <class T>
 void free1d(T** arr, int& ni){
     delete[] (*arr);
 }
@@ -36,6 +49,16 @@ void free2d(T*** arr, int& ni, int& nj){
     delete[] (*arr);
 }
 
+template <class T>
+void free3d(T**** arr, int& ni, int& nj, int& nk){
+    for(int i=0; i<ni;i++){
+        for (int j=0; j<nj; j++){
+            delete[] (*arr)[i][j];
+        }
+        delete[] (*arr)[i];
+    }
+    delete[] (*arr);
+}
 
 template <class T>
 void linspace(T* arr, T& xi, T& xf, int& n){
@@ -114,12 +137,18 @@ template cdouble* alloc1d<cdouble>(int& ni);
 template int** alloc2d<int>(int& ni, int& nj);
 template double** alloc2d<double>(int& ni, int& nj);
 template cdouble** alloc2d<cdouble>(int& ni, int& nj);
+template int*** alloc3d<int>(int& ni, int& nj, int& nk);
+template double*** alloc3d<double>(int& ni, int& nj, int& nk);
+template cdouble*** alloc3d<cdouble>(int& ni, int& nj, int &nk);
 template void free1d(int** arr,  int& ni);
 template void free1d(double** arr,  int& ni);
 template void free1d(cdouble** arr,  int& ni);
 template void free2d(int*** arr,  int& ni, int& nj);
 template void free2d(double*** arr,  int& ni, int& nj);
 template void free2d(cdouble*** arr,  int& ni, int& nj);
+template void free3d(int**** arr,  int& ni, int& nj, int& nk);
+template void free3d(double**** arr,  int& ni, int& nj, int& nk);
+template void free3d(cdouble**** arr,  int& ni, int& nj, int& nk);
 template void linspace(int* arr, int& xi, int& xf, int& n);
 template void linspace(double* arr, double& xi, double& xf, int& n);
 template void write_array1d(int* arr,  int& n, std::string &path);

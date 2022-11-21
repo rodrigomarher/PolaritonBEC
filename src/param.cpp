@@ -5,7 +5,7 @@
 
 Params::Params(){
     n_threads   = 16;
-    g           = 0.1;
+    g           = 0.01;
     omega_r     = 5.0;
     gamma_x     = 0.01;
     gamma_c     = 0.01;
@@ -23,14 +23,14 @@ Params::Params(){
     tmax        = 20;
     nt          = 50000;
     dt          = (tmax-tmin)/(double)(nt-1);
-    mask_xmax   = 6.0;
-    mask_ymax   = 6.0;
-    mask_gamma  = 1.0;
-    nfields     = 2;
-    fields_def  = "10, 5.0, 0.0, 0.0, 0.0, 0.4, 0.0, 0.0, 0.0, 3, 0;"
-    		      "10, 5.0, 0.0, 0.0, 0.2, 0.6, 0.0, 0.0, 0.0, -3, 0;";
-                  //"2.0, 5.0,-10.0, 0.0, 0.0, 1.4, 0.0, 0.0, 0.0, 3, 0";
-    ph_pot      = ",";
+    ndump       = 100;
+    nbuf        = 100;
+    mask_xmax   = 10.0;
+    mask_ymax   = 10.0;
+    mask_gamma  = 2.0;
+    nfields     = 1;
+    fields_def  = "0.1, 10.0, 0.0, 0.0, 0.0, 0.4, 0.0, 0.0, -0.1, 0, 0;";
+    ph_pot      = "cylinder, 10.0, 1.0, 0.0, 0.0;";
     ex_pot      = ",";
 
 }
@@ -56,6 +56,8 @@ void Params::print_param(){
         "tmin:          "<<tmin<<std::endl<<
         "tmax:          "<<tmax<<std::endl<<
         "nt:            "<<nt<<std::endl<<
+        "ndump:         "<<ndump<<std::endl<<
+        "nbuf:          "<<nbuf<<std::endl<<
         "mask_xmax:     "<<mask_xmax<<std::endl<<
         "mask_ymax:     "<<mask_ymax<<std::endl<<
         "mask_gamma:    "<<mask_gamma<<std::endl<<

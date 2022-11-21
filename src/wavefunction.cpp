@@ -4,6 +4,7 @@
 Wavefunction::Wavefunction(Params *params){
     _params = params;
     _wf = alloc2d<cdouble>(_params->nx,_params->ny);
+    _wfbuf = alloc3d<cdouble>(_params->nbuf, _params->nx, _params->ny);
     _x_row = alloc1d<cdouble>(_params->nx);
     _y_row = alloc1d<cdouble>(_params->ny);
     init_zeros();
@@ -67,6 +68,15 @@ void Wavefunction::set_y_row(cdouble *arr, const int i){
     }
 }
 
+void Wavefunction::copy_to_buf(const int ti){
+    for (int i=0; i<_params->nx; i++){
+        for(int j=0; j<_params->ny; j++){
+            _wfbuf[ti][i][j] = _wf[i][j];
+        }
+    }
+
+}
+
 void Wavefunction::operator/(const cdouble k){
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
@@ -75,12 +85,13 @@ void Wavefunction::operator/(const cdouble k){
     }
 }
 
-void Wavefunction::save_wf(std::string filepath){
-    write_array2d_complex(_wf,_params->nx,_params->ny,filepath); 
+void Wavefunction::save_wf(std::string filepath,const int ti){
+    write_array2d_complex(_wfbuf[ti],_params->nx,_params->ny,filepath); 
 }
 
 Wavefunction::~Wavefunction(){
     free2d<cdouble>(&_wf, _params->nx, _params->ny);
+    free3d<cdouble>(&_wfbuf, _params->nbuf, _params->nx, _params->ny);
     free1d<cdouble>(&_x_row, _params->nx);
     free1d<cdouble>(&_y_row, _params->ny);
 }

@@ -94,7 +94,7 @@ results = Parallel(n_jobs=6)(delayed(plot)(ti) for ti in range(nimages))
 
 filenames = [i for i in glob.iglob('tmp/*')]
 filenames.sort()
-with iio.get_writer('condensate_l1.gif', mode='I') as writer:
+with iio.get_writer('condensate.gif', mode='I') as writer:
     for filename in filenames:
         image = iio.imread(filename)
         writer.append_data(image)

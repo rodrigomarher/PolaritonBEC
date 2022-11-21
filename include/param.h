@@ -32,6 +32,8 @@ class Params{
         double tmax;            //Max simulation time [ps] 
         int nt;                 //Number temporal points
         double dt;              //Temporal step [ps]
+        int ndump;
+        int nbuf;
         double mask_xmax;       //Mask max x [um]
         double mask_ymax;       //Mask max y [um]
         double mask_gamma;      //Mask gamma value

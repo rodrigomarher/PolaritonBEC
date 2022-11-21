@@ -6,6 +6,7 @@
 Field::Field(Params *params){
     _params = params;
     _field = alloc2d<cdouble>(_params->nx, _params->ny);
+    _fieldbuf = alloc3d<cdouble>(_params->nbuf,_params->nx, _params->ny);
     _parse();
 }
 
@@ -55,10 +56,17 @@ void Field::update(const int ti){
     }
 }
 
-void Field::save_field(std::string filename){
-   write_array2d_complex(_field, _params->nx, _params->ny, filename);
+void Field::save_field(std::string filename, const int ti){
+   write_array2d_complex(_fieldbuf[ti], _params->nx, _params->ny, filename);
 }
 
+void Field::copy_to_buf(const int ti){
+    for (int i=0;i<_params->nx;i++){
+        for(int j=0; j<_params->ny;j++){
+            _fieldbuf[ti][i][j] = _field[i][j];
+        }
+    }
+}
 Field::~Field(){
     free2d<cdouble>(&_field, _params->nx, _params->ny);
 }

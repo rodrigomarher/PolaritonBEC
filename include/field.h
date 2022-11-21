@@ -15,6 +15,7 @@ class Field{
         std::vector<subField*> _field_container;
         std::vector<std::string> _def_vec;
         cdouble **_field;
+        cdouble ***_fieldbuf;
 
         void _parse();
         
@@ -23,7 +24,8 @@ class Field{
         void set_grid(Grid *grid);
         void set_field();
         cdouble** get_field();
-        void save_field(std::string filename);        
+        void save_field(std::string filename,const int ti);
+        void copy_to_buf(const int ti);
         void update(const int ti);
         cdouble at(const int ti, const int j);
         ~Field();

@@ -13,10 +13,16 @@ template <class T>
 T** alloc2d(int& ni, int& nj);
 
 template <class T>
+T*** alloc3d(int& ni, int& nj, int& nk);
+
+template <class T>
 void free1d(T** arr, int& ni);
 
 template <class T>
 void free2d(T*** arr, int& ni, int& nj);
+
+template <class T>
+void free3d(T**** arr, int& ni, int& nj, int& nk);
 
 template <class T>
 void linspace(T* arr, T& xi, T& xf, int& n);

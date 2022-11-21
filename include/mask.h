@@ -17,6 +17,7 @@ class Mask{
         void set_mask();
         cdouble x(const int i);
         cdouble y(const int j);
+        void save_mask();
         ~Mask();
 };
 

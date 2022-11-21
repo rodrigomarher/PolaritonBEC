@@ -31,6 +31,7 @@ Polariton::Polariton(Params *params){
     _mask = new Mask(_params);
     _mask->set_grid(_grid);
     _mask->set_mask();
+    _mask->save_mask();
 
     _rk = new RK(_params);
     _rk->set_grid(_grid);
@@ -41,8 +42,6 @@ Polariton::Polariton(Params *params){
 
     _params->print_param();
     
-    std::cout<<"Photonic wf norm: "<<_wfc->norm()<<std::endl;
-    std::cout<<"Excitonic wf norm: "<<_wfx->norm()<<std::endl;
      
     omp_set_num_threads(_params->n_threads);
     //_field->update(0);
@@ -54,25 +53,40 @@ void Polariton::set_param(Params *params){
 }
 
 void Polariton::evolve(){
+    int counter_buffer = 0;
     for(int ti=0; ti<_params->nt;ti++){
         _field->update(ti);
         _rk->step(ti);
-        if(ti%100==0){
+    
+        if(ti%_params->ndump==0){
+            std::cout<<(counter_buffer)%_params->nbuf<<" "<<counter_buffer<<std::endl;
+            _wfc->copy_to_buf((counter_buffer)%_params->nbuf);
+            _wfx->copy_to_buf((counter_buffer)%_params->nbuf);
+            _field->copy_to_buf((counter_buffer)%_params->nbuf);
             std::cout<<"ti: "<<ti;
             std::cout<<" Photonic wf norm: "<<_wfc->norm();
             std::cout<<" Excitonic wf norm: "<<_wfx->norm()<<std::endl;
-            snapshot(ti);
+            //snapshot(ti);
+            counter_buffer++;
+
+            if(counter_buffer%_params->nbuf==0){
+                snapshot(ti);
+            }
         }
     }
 }
 
 void Polariton::snapshot(const int ti){
-    std::stringstream ss;
-    ss<<std::setw(8)<<std::setfill('0')<<ti;
-    std::string name_c = "results/wfc_"+ss.str()+".dat";
-    std::string name_x = "results/wfx_"+ss.str()+".dat";
-    std::string name_p = "results/pump_"+ss.str()+".dat";
-    _wfc->save_wf(name_c); 
-    _wfx->save_wf(name_x);
-    _field->save_field(name_p);
+    #pragma omp parallel for collapse(1) schedule(dynamic)
+    for(int i=0; i<_params->nbuf; i++){
+        int number = ti - _params->ndump*(_params->nbuf-i-1);
+        std::stringstream ss;
+        ss<<std::setw(8)<<std::setfill('0')<<number;
+        std::string name_c = "results/wfc_"+ss.str()+".dat";
+        std::string name_x = "results/wfx_"+ss.str()+".dat";
+        std::string name_p = "results/pump_"+ss.str()+".dat";
+        _wfc->save_wf(name_c,i); 
+        _wfx->save_wf(name_x,i);
+        _field->save_field(name_p,i);
+    }
 }

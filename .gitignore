@@ -10,6 +10,7 @@ notebooks/
 *.o
 *.swp
 *.gif
+condensate.gif
 src/*.swp
 movies/
 .DS_Store
