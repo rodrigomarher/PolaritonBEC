@@ -26,11 +26,11 @@ cdouble RK::_rhs_fc(const int i, const int j, const int ti, cdouble** knc, cdoub
 
 cdouble RK::_rhs_fx(const int i, const int j, const int ti, cdouble** knc, cdouble** knx, double pre){
 
-    cdouble laplacian = _laplacian(i,j, _wfx, knx, pre); 
+    //cdouble laplacian = _laplacian(i,j, _wfx, knx, pre); 
     cdouble a = _params->omega_r*(_wfc->at(i,j)+pre*knc[i][j]);
     cdouble b = (_ex_pot->at(i,j)- 0.5*I*hbar*_params->gamma_x)*(_wfx->at(i,j)+pre*knx[i][j]);
     cdouble c = _params->g*abs(_wfx->at(i,j)+pre*knx[i][j])*abs(_wfx->at(i,j)+pre*knx[i][j])*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble d = _params->delta*(_wfx->at(i,j)+pre*knx[i][j]) -0.5*hbar*hbar/_params->mx*laplacian;
+    cdouble d = _params->delta*(_wfx->at(i,j)+pre*knx[i][j]); //-0.5*hbar*hbar/_params->mx*laplacian;
     return -I/hbar*(a+b+c+d);
 }
 
@@ -83,9 +83,6 @@ void RK::_update_k1(const int ti){
         for(int j=0; j<_params->ny; j++){
             _k1c[i][j] = _params->dt*_rhs_fc(i,j,ti,_k1c,_k1x,0.0);
             _k1x[i][j] = _params->dt*_rhs_fx(i,j,ti,_k1c,_k1x,0.0);
-            //if(abs(_rhs_fc(i,j,ti,_k1c,_k1x,0.0))>1E-4){
-            //std::cout<<_params->dt<<std::endl;
-            //}
         }
     }
 }

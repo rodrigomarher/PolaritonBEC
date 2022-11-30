@@ -5,8 +5,8 @@
 
 Params::Params(){
     n_threads   = 16;
-    g           = 0.01;
-    omega_r     = 5.0;
+    g           = 0.10;
+    omega_r     = 5.1;
     gamma_x     = 0.01;
     gamma_c     = 0.01;
     mc          = 2E-5*m0;
@@ -15,22 +15,22 @@ Params::Params(){
     xmax        =  60.0;
     ymin        = -60.0;
     ymax        =  60.0;
-    nx          = 500;
-    ny          = 500;
+    nx          = 1024;
+    ny          = 1024;
     dx          = (xmax-xmin)/(double)(nx-1);
     dy          = (ymax-ymin)/(double)(ny-1);
     tmin        = 0;
-    tmax        = 20;
-    nt          = 50000;
+    tmax        = 8;
+    nt          = 25000;
     dt          = (tmax-tmin)/(double)(nt-1);
     ndump       = 100;
     nbuf        = 100;
-    mask_xmax   = 10.0;
-    mask_ymax   = 10.0;
-    mask_gamma  = 2.0;
+    mask_xmax   = 20.0;
+    mask_ymax   = 20.0;
+    mask_gamma  = 1.2;
     nfields     = 1;
-    fields_def  = "0.1, 10.0, 0.0, 0.0, 0.0, 0.4, 0.0, 0.0, -0.1, 0, 0;";
-    ph_pot      = "cylinder, 10.0, 1.0, 0.0, 0.0;";
+    fields_def  = "20.0, 20.0, 5.0, 0.0, 0.0, 0.4, 0.0, -0.337, 0.0, 0, 0;";
+    ph_pot      = "cylinder, 50.0, 4.0, 0.0, 0.0;";
     ex_pot      = ",";
 
 }

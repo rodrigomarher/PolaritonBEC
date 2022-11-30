@@ -4,6 +4,7 @@ import imageio as iio
 import glob
 import gc
 from joblib import Parallel, delayed
+import sys
 
 njobs=16
 path = "results/"
@@ -94,7 +95,13 @@ results = Parallel(n_jobs=6)(delayed(plot)(ti) for ti in range(nimages))
 
 filenames = [i for i in glob.iglob('tmp/*')]
 filenames.sort()
-with iio.get_writer('condensate.gif', mode='I') as writer:
+
+if len(sys.argv)>1: 
+    gifname = sys.argv[1]
+else:
+    gifname = "condensate.gif"
+
+with iio.get_writer(gifname, mode='I') as writer:
     for filename in filenames:
         image = iio.imread(filename)
         writer.append_data(image)
