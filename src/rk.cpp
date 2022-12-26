@@ -1,4 +1,3 @@
-#include <iostream>
 #include "rk.h"
 #include "utils.h"
 
@@ -20,17 +19,17 @@ cdouble RK::_rhs_fc(const int i, const int j, const int ti, cdouble** knc, cdoub
     cdouble fp = _field->at(i,j);
     cdouble a = fp + _params->omega_r*(_wfx->at(i,j)+pre*knx[i][j]);
     cdouble b = (_ph_pot->at(i,j) - 0.5*I*hbar*_params->gamma_c)*(_wfc->at(i,j)+pre*knc[i][j]);
-    cdouble c = -0.5*hbar*hbar/_params->mc*laplacian;
+    cdouble c = _params->omega_c*(_wfc->at(i,j)+pre*knc[i][j]) - 0.5*hbar*hbar/_params->mc*laplacian;
     return -I/hbar*(a+b+c);
 }
 
 cdouble RK::_rhs_fx(const int i, const int j, const int ti, cdouble** knc, cdouble** knx, double pre){
 
-    //cdouble laplacian = _laplacian(i,j, _wfx, knx, pre); 
+    cdouble laplacian = _laplacian(i,j, _wfx, knx, pre); 
     cdouble a = _params->omega_r*(_wfc->at(i,j)+pre*knc[i][j]);
     cdouble b = (_ex_pot->at(i,j)- 0.5*I*hbar*_params->gamma_x)*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble c = _params->g*abs(_wfx->at(i,j)+pre*knx[i][j])*abs(_wfx->at(i,j)+pre*knx[i][j])*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble d = _params->delta*(_wfx->at(i,j)+pre*knx[i][j]); //-0.5*hbar*hbar/_params->mx*laplacian;
+    cdouble c = _params->g*std::abs(_wfx->at(i,j))*std::abs(_wfx->at(i,j))*(_wfx->at(i,j)+pre*knx[i][j]);
+    cdouble d = _params->omega_x*(_wfx->at(i,j)+pre*knx[i][j]) - 0.5*hbar*hbar/_params->mx*laplacian;
     return -I/hbar*(a+b+c+d);
 }
 

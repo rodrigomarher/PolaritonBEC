@@ -5,33 +5,35 @@
 
 Params::Params(){
     n_threads   = 16;
-    g           = 0.10;
-    omega_r     = 5.1;
-    gamma_x     = 0.01;
-    gamma_c     = 0.01;
+    g           = 0.01;
+    omega_r     = 100.0;
+    omega_c     = 1483.1;
+    omega_x     = 1483.1;
+    gamma_x     = 0.10;
+    gamma_c     = 0.10;
     mc          = 2E-5*m0;
     mx          = 0.5*m0;
     xmin        = -60.0;
     xmax        =  60.0;
     ymin        = -60.0;
     ymax        =  60.0;
-    nx          = 1024;
-    ny          = 1024;
+    nx          = 512;
+    ny          = 512;
     dx          = (xmax-xmin)/(double)(nx-1);
     dy          = (ymax-ymin)/(double)(ny-1);
     tmin        = 0;
-    tmax        = 8;
+    tmax        = 1.0;
     nt          = 25000;
     dt          = (tmax-tmin)/(double)(nt-1);
     ndump       = 100;
-    nbuf        = 100;
+    nbuf        = 250;
     mask_xmax   = 20.0;
     mask_ymax   = 20.0;
-    mask_gamma  = 1.2;
+    mask_gamma  = 1.0;
     nfields     = 1;
-    fields_def  = "20.0, 20.0, 5.0, 0.0, 0.0, 0.4, 0.0, -0.337, 0.0, 0, 0;";
-    ph_pot      = "cylinder, 50.0, 4.0, 0.0, 0.0;";
-    ex_pot      = ",";
+    fields_def  = "1000.0, 20.0, 5.0, 0.0, 0.0, 0.0104, 1483.1, -1.0, 0.0, 0, 0;";
+    ph_pot      = "cylinder, 5000.0, 4.0, 0.0, 0.0;";
+    ex_pot      = ";";
 
 }
 

@@ -36,7 +36,7 @@ class RK{
     public:
         RK(Params* params);
         void set_grid(Grid* grid);
-        void set_wf(Wavefunction* wfx, Wavefunction* wfc);
+        void set_wf(Wavefunction* wf1, Wavefunction* wf2);
         void set_field(Field* field);
         void set_mask(Mask *mask);
         void set_pot(Potential *ph_pot, Potential *ex_pot);

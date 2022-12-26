@@ -35,7 +35,7 @@ Polariton::Polariton(Params *params){
 
     _rk = new RK(_params);
     _rk->set_grid(_grid);
-    _rk->set_wf(_wfx, _wfc);
+    _rk->set_wf(_wfc, _wfx);
     _rk->set_field(_field);
     _rk->set_mask(_mask);
     _rk->set_pot(_ph_pot, _ex_pot);
@@ -54,10 +54,28 @@ void Polariton::set_param(Params *params){
 
 void Polariton::evolve(){
     int counter_buffer = 0;
+    cdouble **wf_ph_avg, **wf_ex_avg;
+    wf_ph_avg = alloc2d<cdouble>(_params->nx, _params->ny);
+    wf_ex_avg = alloc2d<cdouble>(_params->nx, _params->ny);
+    for(int i=0;i<_params->nx;i++){
+        for(int j=0; j>_params->ny;j++){
+            wf_ph_avg[i][j] = cdouble(0.0,0.0); 
+            wf_ex_avg[i][j] = cdouble(0.0,0.0); 
+        }
+    }
     for(int ti=0; ti<_params->nt;ti++){
         _field->update(ti);
         _rk->step(ti);
-    
+    	
+
+	for(int i=0;i<_params->nx;i++){
+	    for(int j=0; j<_params->ny;j++){
+	        wf_ph_avg[i][j] += _wfc->at(i,j)*_params->dt; 
+	        wf_ex_avg[i][j] += _wfx->at(i,j)*_params->dt; 
+	    }
+	}
+
+
         if(ti%_params->ndump==0){
             std::cout<<(counter_buffer)%_params->nbuf<<" "<<counter_buffer<<std::endl;
             _wfc->copy_to_buf((counter_buffer)%_params->nbuf);
@@ -74,6 +92,10 @@ void Polariton::evolve(){
             }
         }
     }
+    std::string path = "results/wfc_avg.dat";
+    write_array2d_complex(wf_ph_avg,_params->nx,_params->ny,path);
+    path = "results/wfx_avg.dat";
+    write_array2d_complex(wf_ex_avg,_params->nx,_params->ny,path);
 }
 
 void Polariton::snapshot(const int ti){

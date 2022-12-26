@@ -1,4 +1,4 @@
-results/
+results*/
 PolaritonBEC*
 biblio/
 venv/
@@ -14,3 +14,5 @@ condensate.gif
 src/*.swp
 movies/
 .DS_Store
+*.pdf
+*.ipynb

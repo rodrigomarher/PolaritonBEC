@@ -12,7 +12,7 @@ class subField {
         double _fp, _tmin, _tmax;
         double _w0, _x0, _y0;
         int _l, _p;
-        double _deltaw, _kpx, _kpy;
+        double _omega, _kpx, _kpy;
 
         std::string _definition;
         Grid *_grid;
