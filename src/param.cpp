@@ -34,6 +34,7 @@ Params::Params(){
     fields_def  = "1000.0, 20.0, 5.0, 0.0, 0.0, 0.0104, 1483.1, -1.0, 0.0, 0, 0;";
     ph_pot      = "cylinder, 5000.0, 4.0, 0.0, 0.0;";
     ex_pot      = ";";
+    out_folder  = "results_f1000.0";
 
 }
 
@@ -44,6 +45,8 @@ void Params::print_param(){
         "----------------------\n"<<
         "g:             "<<g<<std::endl<<
         "omega_r:       "<<omega_r<<std::endl<<
+	"omega_c:	"<<omega_c<<std::endl<<
+	"omega_x:	"<<omega_x<<std::endl<<
         "gamma_x:       "<<gamma_x<<std::endl<<
         "gamma_c:       "<<gamma_c<<std::endl<<
         "mc:            "<<mc<<std::endl<<
@@ -66,7 +69,8 @@ void Params::print_param(){
         "nfields:       "<<nfields<<std::endl<<
         "field_def:     "<<fields_def<<std::endl<<
         "ph_pot:        "<<ph_pot<<std::endl<<
-        "ex_pot:        "<<ex_pot<<std::endl;
+        "ex_pot:        "<<ex_pot<<std::endl<<
+    	"out_folder:    "<<out_folder<<std::endl;
 
     std::cout<<ss.str();
 }

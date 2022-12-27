@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iomanip>
 #include <omp.h>
+#include <filesystem>
 #include "polariton.h"
 
 Polariton::Polariton(Params *params){
@@ -42,6 +43,9 @@ Polariton::Polariton(Params *params){
 
     _params->print_param();
     
+    if(!std::filesystem::exists(_params->out_folder)){
+    	std::filesystem::create_directory(_params->out_folder);
+    }
      
     omp_set_num_threads(_params->n_threads);
     //_field->update(0);
@@ -87,15 +91,19 @@ void Polariton::evolve(){
             //snapshot(ti);
             counter_buffer++;
 
-            if(counter_buffer%_params->nbuf==0){
-                snapshot(ti);
-            }
+            //if(counter_buffer%_params->nbuf==0){
+            //    snapshot(ti);
+            //}
         }
     }
-    std::string path = "results/wfc_avg.dat";
+    std::string path = _params->out_folder+"/wfc_avg.dat";
     write_array2d_complex(wf_ph_avg,_params->nx,_params->ny,path);
-    path = "results/wfx_avg.dat";
+    path = _params->out_folder+"/wfx_avg.dat";
     write_array2d_complex(wf_ex_avg,_params->nx,_params->ny,path);
+    path = _params->out_folder+"/wfc_lst.dat";
+    write_array2d_complex(_wfc->get_wf(),_params->nx,_params->ny,path);
+    path = _params->out_folder+"/wfx_lst.dat";
+    write_array2d_complex(_wfx->get_wf(),_params->nx,_params->ny,path);
 }
 
 void Polariton::snapshot(const int ti){

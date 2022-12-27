@@ -42,6 +42,7 @@ class Params{
         std::string fields_def; //Field defunition
         std::string ph_pot;     //Photonic potential
         std::string ex_pot;     //Excitonic potential
+	std::string out_folder; //Output folder name
         
 	Params();
         void print_param();
