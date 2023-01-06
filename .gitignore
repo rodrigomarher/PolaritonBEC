@@ -16,3 +16,5 @@ movies/
 .DS_Store
 *.pdf
 *.ipynb
+.tmp/
+.tmp

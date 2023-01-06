@@ -34,6 +34,8 @@ Params::Params(){
     fields_def  = "1000.0, 20.0, 5.0, 0.0, 0.0, 0.0104, 1483.1, -1.0, 0.0, 0, 0;";
     ph_pot      = "cylinder, 5000.0, 4.0, 0.0, 0.0;";
     ex_pot      = ";";
+    cap_p	= 3.0;
+    cap_eta 	= 1.0;
 
 }
 
@@ -66,7 +68,9 @@ void Params::print_param(){
         "nfields:       "<<nfields<<std::endl<<
         "field_def:     "<<fields_def<<std::endl<<
         "ph_pot:        "<<ph_pot<<std::endl<<
-        "ex_pot:        "<<ex_pot<<std::endl;
+        "ex_pot:        "<<ex_pot<<std::endl<<
+    	"cap_p:		"<<cap_p<<std::endl<<
+	"cap_eta:	"<<cap_eta<<std::endl;
 
     std::cout<<ss.str();
 }

@@ -23,6 +23,7 @@ class Potential{
         void set_grid(Grid *grid);
         void set_potential();
         cdouble at(const int i, const int j);
+	void write(std::string path);
         ~Potential();
 };
 #endif

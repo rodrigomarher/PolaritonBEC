@@ -42,6 +42,8 @@ class Params{
         std::string fields_def; //Field defunition
         std::string ph_pot;     //Photonic potential
         std::string ex_pot;     //Excitonic potential
+	double cap_p;		//Complex Absorbing Potential Smoothness
+	double cap_eta;		//Complex Absorbing Potential Strength
         
 	Params();
         void print_param();
