@@ -73,8 +73,8 @@ cdouble Mask::y(const int j){
 }
 
 void Mask::save_mask(){
-    std::string name_mask_x = "results/mask_x.dat";
-    std::string name_mask_y = "results/mask_y.dat";
+    std::string name_mask_x = _param->out_folder + "/mask_x.dat";
+    std::string name_mask_y = _param->out_folder + "/mask_y.dat";
     write_array1d(_xmask, _param->nx, name_mask_x);
     write_array1d(_ymask, _param->ny, name_mask_y);
 }

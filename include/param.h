@@ -44,6 +44,7 @@ class Params{
         std::string ex_pot;     //Excitonic potential
 	double cap_p;		//Complex Absorbing Potential Smoothness
 	double cap_eta;		//Complex Absorbing Potential Strength
+	std::string out_folder; //Output folder name
         
 	Params();
         void print_param();

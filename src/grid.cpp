@@ -18,11 +18,11 @@ Grid::Grid(Params *p){
     linspace<double>(_y, _params->ymin, _params->ymax, _ny);
     std::cout<<_params->tmin<<" "<<_params->tmax<<std::endl;
     linspace<double>(_t, _params->tmin, _params->tmax, _nt);
-    std::string path = "results/t.dat";
+    std::string path = _params->out_folder + "/t.dat";
     write_array1d<double>(_t,_nt, path);
-    path = "results/x.dat";
+    path = _params->out_folder + "/x.dat";
     write_array1d<double>(_x,_nx, path);
-    path = "results/y.dat";
+    path = _params->out_folder + "/y.dat";
     write_array1d<double>(_y,_ny, path);
 }
 
