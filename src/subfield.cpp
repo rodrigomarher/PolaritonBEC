@@ -17,7 +17,7 @@ void subField::_parse(){
         field_parameters.push_back(item);
         counter++;
     }
-    if(counter!=11){
+    if(counter!=12){
         std::cout<<"[ERROR] Invalid number of field parameters."<<std::endl;
     }
     _fp = std::stod(field_parameters[0]);
@@ -31,7 +31,8 @@ void subField::_parse(){
     _kpy = std::stod(field_parameters[8]);
     _l = std::stoi(field_parameters[9]);
     _p = std::stoi(field_parameters[10]);
-    _cep = std::stoi(field_parameters[11]);
+    _cep = std::stod(field_parameters[11])*M_PI;
+    std::cout<<"CEP = "<<_cep<<std::endl;
 
 }
 
@@ -60,7 +61,7 @@ cdouble subField::_laguerre(const double x, const double y, const cdouble tenv){
 
 cdouble subField::_tenv_sin2(const int ti){
     double deltat = _tmax-_tmin; 
-    cdouble phase = exp(-I*_omega/hbar*_grid->t(ti) + _cep*M_PI);
+    cdouble phase = exp(-I*_omega/hbar*_grid->t(ti) + _cep);
     if(_grid->t(ti) < _tmin){
         return cdouble(0.0,0.0);
     }
