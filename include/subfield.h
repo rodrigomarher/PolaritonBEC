@@ -12,6 +12,7 @@ class subField {
         double _fp, _tmin, _tmax;
         double _w0, _x0, _y0;
         int _l, _p;
+	double _cep;
         double _omega, _kpx, _kpy;
 
         std::string _definition;

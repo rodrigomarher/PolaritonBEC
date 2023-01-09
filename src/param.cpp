@@ -9,7 +9,7 @@ Params::Params(){
     omega_r     = 100.0;
     omega_c     = 1483.1;
     omega_x     = 1483.1;
-    gamma_x     = 0.10;
+    gamma_x     = 0.01;
     gamma_c     = 0.10;
     mc          = 2E-5*m0;
     mx          = 0.5*m0;
@@ -31,12 +31,12 @@ Params::Params(){
     mask_ymax   = 20.0;
     mask_gamma  = 1.0;
     nfields     = 1;
-    fields_def  = "10000.0, 20.0, 5.0, 0.0, 0.0, 0.0104, 1483.1, -1.0, 0.0, 0, 0;";
+    fields_def  = "5000.0, 20.0, 5.0, 0.0, 0.0, 0.0104, 1483.1, -1.0, 0.0, 0, 0, 0..00;";
     ph_pot      = "cylinder, 5000.0, 4.0, 0.0, 0.0;";
     ex_pot      = ";";
     cap_p	= 15.0;
     cap_eta 	= 20.0;
-    out_folder  = "results_f1000.0";
+    out_folder  = "results_f1000.0_cep0.0";
 
 }
 

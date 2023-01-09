@@ -31,6 +31,7 @@ void subField::_parse(){
     _kpy = std::stod(field_parameters[8]);
     _l = std::stoi(field_parameters[9]);
     _p = std::stoi(field_parameters[10]);
+    _cep = std::stoi(field_parameters[11]);
 
 }
 
@@ -59,7 +60,7 @@ cdouble subField::_laguerre(const double x, const double y, const cdouble tenv){
 
 cdouble subField::_tenv_sin2(const int ti){
     double deltat = _tmax-_tmin; 
-    cdouble phase = exp(-I*_omega/hbar*_grid->t(ti));
+    cdouble phase = exp(-I*_omega/hbar*_grid->t(ti) + _cep*M_PI);
     if(_grid->t(ti) < _tmin){
         return cdouble(0.0,0.0);
     }

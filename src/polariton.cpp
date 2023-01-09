@@ -74,7 +74,7 @@ void Polariton::evolve(){
         _field->update(ti);
         _rk->step(ti);
     	
-
+	#pragma omp parallel for collapse(1) schedule(dynamic)
 	for(int i=0;i<_params->nx;i++){
 	    for(int j=0; j<_params->ny;j++){
 	        wf_ph_avg[i][j] += _wfc->at(i,j)*_params->dt; 
