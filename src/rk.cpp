@@ -5,35 +5,21 @@
 RK::RK(Params* params){
     _params = params;
     
-    _k1x = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k2x = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k3x = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k4x = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k1c = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k2c = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k3c = alloc2d<cdouble>(_params->nx, _params->ny);
-    _k4c = alloc2d<cdouble>(_params->nx, _params->ny);
+    _k1 = alloc2d<cdouble>(_params->nx, _params->ny);
+    _k2 = alloc2d<cdouble>(_params->nx, _params->ny);
+    _k3 = alloc2d<cdouble>(_params->nx, _params->ny);
+    _k4 = alloc2d<cdouble>(_params->nx, _params->ny);
 }
 
-cdouble RK::_rhs_fc(const int i, const int j, const int ti, cdouble** knc, cdouble** knx, double pre){
-    cdouble laplacian = _laplacian(i,j, _wfc, knc, pre); 
+cdouble RK::_rhs_f(const int i, const int j, const int ti, cdouble** kn, double pre){
+    cdouble laplacian = _laplacian(i,j, _wf, kn, pre); 
     cdouble fp = _field->at(i,j);
-    cdouble a = fp + _params->omega_r*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble b = (_ph_pot->at(i,j) - 0.5*I*hbar*_params->gamma_c)*(_wfc->at(i,j)+pre*knc[i][j]);
-    cdouble c = -0.5*hbar*hbar/_params->mc*laplacian;
-    return -I/hbar*(a+b+c);
-}
-
-cdouble RK::_rhs_fx(const int i, const int j, const int ti, cdouble** knc, cdouble** knx, double pre){
-
-    //cdouble laplacian = _laplacian(i,j, _wfx, knx, pre); 
-    cdouble a = _params->omega_r*(_wfc->at(i,j)+pre*knc[i][j]);
-    cdouble b = (_ex_pot->at(i,j)- 0.5*I*hbar*_params->gamma_x)*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble c = _params->g*abs(_wfx->at(i,j)+pre*knx[i][j])*abs(_wfx->at(i,j)+pre*knx[i][j])*(_wfx->at(i,j)+pre*knx[i][j]);
-    cdouble d = _params->delta*(_wfx->at(i,j)+pre*knx[i][j]); //-0.5*hbar*hbar/_params->mx*laplacian;
+    cdouble a = fp;
+    cdouble b = (_pot->at(i,j) - 0.5*I*hbar*_params->gamma_c)*(_wf->at(i,j)+pre*kn[i][j]);
+    cdouble c = _params->g*(_wf->at(i,j))*std::conj(_wf->at(i,j))*(_wf->at(i,j)+pre*kn[i][j]);
+    cdouble d = _params->omega_c*(_wf->at(i,j)+pre*kn[i][j]) - 0.5*hbar*hbar/_params->mc*laplacian;
     return -I/hbar*(a+b+c+d);
 }
-
 
 cdouble RK::_laplacian(const int i, const int j,Wavefunction* wf, cdouble** kn, double pre){
     cdouble laplacian_x;
@@ -81,8 +67,7 @@ void RK::_update_k1(const int ti){
     #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
-            _k1c[i][j] = _params->dt*_rhs_fc(i,j,ti,_k1c,_k1x,0.0);
-            _k1x[i][j] = _params->dt*_rhs_fx(i,j,ti,_k1c,_k1x,0.0);
+            _k1[i][j] = _params->dt*_rhs_f(i,j,ti,_k1,0.0);
         }
     }
 }
@@ -91,8 +76,7 @@ void RK::_update_k2(const int ti){
     #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
-            _k2c[i][j] = _params->dt*_rhs_fc(i,j,ti,_k1c,_k1x,0.5);
-            _k2x[i][j] = _params->dt*_rhs_fx(i,j,ti,_k1c,_k1x,0.5);
+            _k2[i][j] = _params->dt*_rhs_f(i,j,ti,_k1,0.5);
         }
     }
 }
@@ -101,8 +85,7 @@ void RK::_update_k3(const int ti){
     #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
-            _k3c[i][j] = _params->dt*_rhs_fc(i,j,ti,_k2c,_k2x,0.5);
-            _k3x[i][j] = _params->dt*_rhs_fx(i,j,ti,_k2c,_k2x,0.5);
+            _k3[i][j] = _params->dt*_rhs_f(i,j,ti,_k2,0.5);
         }
     }
 }
@@ -111,8 +94,7 @@ void RK::_update_k4(const int ti){
     #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx;i++){
         for(int j=0; j<_params->ny; j++){
-            _k4c[i][j] = _params->dt*_rhs_fc(i,j,ti,_k3c,_k3x,1.0);
-            _k4x[i][j] = _params->dt*_rhs_fx(i,j,ti,_k3c,_k3x,1.0);
+            _k4[i][j] = _params->dt*_rhs_f(i,j,ti,_k3,1.0);
         }
     }
 }
@@ -121,8 +103,8 @@ void RK::set_grid(Grid* grid){
     _grid = grid;
 }
 
-void RK::set_wf(Wavefunction* wf1, Wavefunction* wf2){
-    _wfc = wf1; _wfx = wf2;
+void RK::set_wf(Wavefunction* wf1){
+    _wf = wf1; 
 }
 
 void RK::set_field(Field* field){
@@ -133,34 +115,27 @@ void RK::set_mask(Mask* mask){
     _mask = mask;
 }
 
-void RK::set_pot(Potential *ph_pot, Potential *ex_pot){
-    _ph_pot = ph_pot;
-    _ex_pot = ex_pot;
+void RK::set_pot(Potential *pot){
+    _pot = pot;
 }
 
 void RK::step(const int ti){
     _update_k(ti);
 
-    cdouble** wfc = _wfc->get_wf();
-    cdouble** wfx = _wfx->get_wf();
+    cdouble** wf = _wf->get_wf();
     cdouble u = 1.0/6.0;
 
     #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
-            wfc[i][j] += u*(_k1c[i][j] + 2.0*_k2c[i][j] + 2.0*_k3c[i][j] + _k4c[i][j])*_mask->x(i)*_mask->y(j);
-            wfx[i][j] += u*(_k1x[i][j] + 2.0*_k2x[i][j] + 2.0*_k3x[i][j] + _k4x[i][j])*_mask->x(i)*_mask->y(j);
+            wf[i][j] += u*(_k1[i][j] + 2.0*_k2[i][j] + 2.0*_k3[i][j] + _k4[i][j])*_mask->x(i)*_mask->y(j);
         }
     }
 }
 
 RK::~RK(){
-    free2d<cdouble>(&_k1x,_params->nx,_params->ny);
-    free2d<cdouble>(&_k2x,_params->nx,_params->ny);
-    free2d<cdouble>(&_k3x,_params->nx,_params->ny);
-    free2d<cdouble>(&_k4x,_params->nx,_params->ny);
-    free2d<cdouble>(&_k1c,_params->nx,_params->ny);
-    free2d<cdouble>(&_k2c,_params->nx,_params->ny);
-    free2d<cdouble>(&_k3c,_params->nx,_params->ny);
-    free2d<cdouble>(&_k4c,_params->nx,_params->ny);
+    free2d<cdouble>(&_k1,_params->nx,_params->ny);
+    free2d<cdouble>(&_k2,_params->nx,_params->ny);
+    free2d<cdouble>(&_k3,_params->nx,_params->ny);
+    free2d<cdouble>(&_k4,_params->nx,_params->ny);
 }

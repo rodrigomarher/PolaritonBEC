@@ -1,5 +1,6 @@
 #include <sstream>
 #include <iostream>
+#include <cmath>
 #include "potential.h"
 
 Potential::Potential(Params *params){
@@ -51,6 +52,10 @@ void Potential::set_potential(){
             else{
                 _pot[i][j] = cdouble(0.0,0.0);
             }
+	    //double r = sqrt(pow(_grid->x(i),2)+pow(_grid->y(j),2));
+	    //double R = sqrt(pow(_params->xmax,2) + pow(_params->ymax,2));
+	    //double w = log(1.0-pow(cos(M_PI/2.0*(1-r/R)),_params->cap_p)) ;
+	    //_pot[i][j] += I*_params->cap_eta*w;
         }
     }
 }

@@ -15,7 +15,8 @@ class Params{
         int n_threads;          //Number of threads for parallelization
         double g;               //Interaction coefficient [meV um^2]
         double omega_r;         //Rabi frequency [meV]
-        double delta;           //Exciton-cavity detuning [1/ps] 
+        double omega_c;         //Cavity photon frequency [meV]
+        double omega_x;         //Cavity exciton frequency [meV] 
         double gamma_x;         //Exciton decay rate [1/ps] 
         double gamma_c;         //Photon decay rate [1/ps] 
         double mc;              //Polariton effective mass [m0]
@@ -41,8 +42,8 @@ class Params{
         std::string fields_def; //Field defunition
         std::string ph_pot;     //Photonic potential
         std::string ex_pot;     //Excitonic potential
-        
-	Params();
+        std::string out_folder;
+        Params();
         void print_param();
 };
 

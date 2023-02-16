@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "utils.h"
+#include <iostream>
 
 Grid::Grid(Params *p){
     _params = p;
@@ -15,7 +16,14 @@ Grid::Grid(Params *p){
     _t = alloc1d<double>(_nt);
     linspace<double>(_x, _params->xmin, _params->xmax, _nx);
     linspace<double>(_y, _params->ymin, _params->ymax, _ny);
+    std::cout<<_params->tmin<<" "<<_params->tmax<<std::endl;
     linspace<double>(_t, _params->tmin, _params->tmax, _nt);
+    std::string path = "results/t.dat";
+    write_array1d<double>(_t,_nt, path);
+    path = "results/x.dat";
+    write_array1d<double>(_x,_nx, path);
+    path = "results/y.dat";
+    write_array1d<double>(_y,_ny, path);
 }
 
 double* Grid::get_x(){

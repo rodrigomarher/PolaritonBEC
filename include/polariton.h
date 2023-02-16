@@ -13,10 +13,10 @@ class Polariton{
     private:
         Grid *_grid;
         Params *_params;
-        Wavefunction *_wfc, *_wfx;
+        Wavefunction *_wf;
         RK *_rk;
         Field* _field;
-        Potential *_ph_pot, *_ex_pot;
+        Potential *_pot;
         Mask *_mask;
 
     public:

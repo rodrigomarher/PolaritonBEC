@@ -17,7 +17,7 @@ void subField::_parse(){
         field_parameters.push_back(item);
         counter++;
     }
-    if(counter!=11){
+    if(counter!=12){
         std::cout<<"[ERROR] Invalid number of field parameters."<<std::endl;
     }
     _fp = std::stod(field_parameters[0]);
@@ -26,11 +26,12 @@ void subField::_parse(){
     _y0 = std::stod(field_parameters[3]);
     _tmin = std::stod(field_parameters[4]);
     _tmax = std::stod(field_parameters[5]);
-    _deltaw = std::stod(field_parameters[6]);
+    _omega = std::stod(field_parameters[6]);
     _kpx = std::stod(field_parameters[7]);
     _kpy = std::stod(field_parameters[8]);
     _l = std::stoi(field_parameters[9]);
     _p = std::stoi(field_parameters[10]);
+    _cep = std::stod(field_parameters[11]);
 
 }
 
@@ -59,14 +60,15 @@ cdouble subField::_laguerre(const double x, const double y, const cdouble tenv){
 
 cdouble subField::_tenv_sin2(const int ti){
     double deltat = _tmax-_tmin; 
-    cdouble phase = exp(-I*_deltaw*_grid->t(ti));
+    cdouble phase = exp(-I*(_omega/hbar*_grid->t(ti) + _cep*M_PI));
     if(_grid->t(ti) < _tmin){
         return cdouble(0.0,0.0);
     }
     if(_grid->t(ti) > _tmax){
         return cdouble(0.0,0.0);
         }
-    return cdouble(pow(sin(M_PI*(_grid->t(ti)-_tmin)/deltat),2),0.0)*phase;
+    cdouble env = cdouble(pow(sin(M_PI*(_grid->t(ti)-_tmin)/deltat),2),0.0)*phase;
+    return env;
 }
 
 void subField::set_grid(Grid *grid){
@@ -77,7 +79,7 @@ cdouble subField::at(const int i, const int j, const int ti){
     cdouble env = _tenv_sin2(ti);
     double x = _grid->x(i);
     double y = _grid->y(j);
-    return _laguerre(x,y,env);
+    return cdouble(_laguerre(x,y,env).real(),0.0);
 }
 
 

@@ -47,7 +47,7 @@ cdouble Wavefunction::at(const int i, const int j){
 
 cdouble Wavefunction::norm(){
     cdouble sum = 0.0;
-    #pragma omp parallel for
+    #pragma omp parallel for collapse(1) schedule(dynamic)
     for(int i=0; i<_params->nx; i++){
         for(int j=0; j<_params->ny; j++){
             sum += conj(_wf[i][j])*_wf[i][j];

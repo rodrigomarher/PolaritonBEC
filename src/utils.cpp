@@ -62,7 +62,8 @@ void free3d(T**** arr, int& ni, int& nj, int& nk){
 
 template <class T>
 void linspace(T* arr, T& xi, T& xf, int& n){
-    double dx = abs(xf-xi)/(double)(n-1);
+    double dx = fabs(xf-xi)/(double)(n-1);
+    std::cout<<xi<<" "<<xf<<" "<<dx<<std::endl;
     if (n==0){}
     else if (n==1){arr[0] = xi;}
     else{
