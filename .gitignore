@@ -8,9 +8,11 @@ lib/
 notebooks/
 .ipynb_checkpoints
 *.o
+*.out
 *.swp
 *.gif
 *.dat
+*.tar.gz
 condensate.gif
 src/*.swp
 movies/

@@ -4,7 +4,7 @@
 #include "param.h"
 
 Params::Params(){
-    n_threads   = 16;
+    n_threads   = 72;
     g           = 0.01;
     omega_r     = 5.1;
     omega_c     = 1483.1;
@@ -29,13 +29,13 @@ Params::Params(){
     nbuf        = 250;
     mask_xmax   = 20.0;
     mask_ymax   = 20.0;
-    mask_gamma  = 1.2;
+    mask_gamma  = 0.9;
     nfields     = 2;
-    fields_def  = "10000.0, 2.0, 5.0, 0.0, 0.0, 0.0055731999999999995, 1483.1, -3.0, 0.0, 0, 0, 0.0;"
-                  "10000.0, 2.0, 0.0, 0.0, 0.0, 0.0055731999999999995, 1483.1, 1.0, 0.0, 0, 0, 0.0;";
-    ph_pot      = "cylinder, 0.0, 4.0, 0.0, 0.0;";
+    fields_def  = "7500.0, 4.0, 5.0, 0.0, 0.0, 0.0055731999999999995, 1483.1, -1.0, 0.0, 0, 0, 0.0;"
+                  "700.0,   1.0, 1.0, 0.0, 0.388857939, 0.411142061,      1483.1,  0.0, 0.0, 0, 0, 0.0;";
+    ph_pot      = "cylinder, 0.0, 20.0, 0.0, 0.0;";
     ex_pot      = ",";
-    out_folder  = "results_free_2pump";
+    out_folder  = "results_2pump_short_phi0.0";
 }
 
 void Params::print_param(){

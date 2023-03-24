@@ -3,6 +3,7 @@ use_MPI := $(USE_MPI)
 
 ifeq ($(detected_OS),Linux)
 	CC = g++
+	#CC = icpc
 endif
 ifeq ($(detected_OS), Darwin)
 	CC = g++-12
@@ -12,8 +13,8 @@ ifeq ($(use_MPI), Yes)
 	CC =  mpic++
 endif
 
-CFLAGS = -lm -O3 -fopenmp -ffast-math -g -Wall -std=c++17
-
+CFLAGS = -lm -O3 -fopenmp -g -Wall -std=c++17
+#CFLAGS = -lm -O3 -qopenmp -xHost -unroll -ipo -Wall  -std=c++17
 SRC = ./src/
 
 INCLUDE = ./include/

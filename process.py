@@ -7,22 +7,22 @@ from joblib import Parallel, delayed
 import sys
 
 njobs=16
-path = "results_free_2pump/"
+path = "results_scatter_2pump/"
 wfc_names = []
 wfx_names = []
 pump_names = []
 
 for i,name in enumerate(glob.iglob(path+"pump*")):
     pump_names.append(name)
-for i,name in enumerate(glob.iglob(path+"wf*")):
+for i,name in enumerate(glob.iglob(path+"wf_0*")):
     wfc_names.append(name)
 print(pump_names)
 pump_names.sort()
 wfc_names.sort()
 nimages = len(pump_names)
 
-x = np.linspace(-60,60,1024)
-y = np.linspace(-60,60,1024)
+x = np.linspace(-60,60,2048)
+y = np.linspace(-60,60,2048)
 t = np.linspace(0,2,500)
 
 pump = np.zeros(nimages)
